@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+{% block body %}
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                <div style="padding: 5px">
+
+                </div>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                    
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Content</th>
+                                            <th>Last Updated</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+{% for post in post %}
+                                        <tr>
+                                            <td>{{ post.id}}</td>
+                                            <td>{{ post.name}}</td>
+                                            <td>{{ post.content}}</td>
+                                            <td>{{ post.last_update }}</td>
+                                            <td><a style="cursor: pointer;" class="btn btn-success btn-circle editGrpBtn" data-post-id="{{post.id}}" onclick="editCategory('{{post.id}}')"><i class="fas fa-edit"></i></a></td>
+                                            <td><a href="/delete/category/{{ post.id }}" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a></td>
+                                        </tr>
+
+{% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+                {% with errors = get_flashed_messages(category_filter=["danger"]) %}
+                    {% if errors %}
+                    {% for error in errors %}
+                    <script>
+                        new Notify ({
+                        title: 'Error',
+                        text: `{{error|safe}}`,
+                        status: 'error'
+                        })
+                    </script>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                    {% with messages = get_flashed_messages(category_filter=["success"]) %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    <script>
+                        new Notify ({
+                            title: 'Success',
+                            text: `{{message|safe}}`,
+                            status: 'success'
+                            })
+                        </script>                      
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+            {% endblock %}

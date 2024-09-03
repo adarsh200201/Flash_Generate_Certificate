@@ -1,0 +1,108 @@
+{% extends "layout.html" %}
+{% block body %}
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                <div style="padding: 5px">
+
+                </div>
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                            <th>Activate / Deactivate</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+{#                                    Start loop#}
+{% for post in post %}
+                                        <tr>
+                                            <td>{{ post.id}}</td>
+                                            <td>{{ post.name}}</td>
+                                            <td>{{ post.email }}</td>
+                                            <td>{{ post.last_login }}</td>
+                                             <td class="{{'bg-success' if post.status == 1 else 'bg-danger'}} font-weight-bold text-white">{{"Activated" if post.status == 1 else "Deactivated"}}</td>
+                                            <td class="text-center">
+                                        <a href="/activate/user/{{ post.id }}" class="btn {{'btn-success' if post.status == 0 else 'btn-danger'}} btn-circle">
+                                        <i class="fas {{'fa-check' if post.status == 0 else 'fa-times'}}"></i>
+                                        </a>
+                                            </td>
+                                            <td><a style="cursor: pointer;" class="btn btn-danger btn-circle" onclick="delUser('{{ post.id }}')"><i class="fas fa-trash"></i></a></td>
+                                        </tr>
+
+{#                                    end loop#}
+{% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+                {% with warnings = get_flashed_messages(category_filter=["warning"]) %}
+                    {% if warnings %}
+                    {% for warning in warnings %}
+                    <script>
+                        new Notify ({
+                        title: 'Warning',
+                        text: `{{warning|safe}}`,
+                        status: 'warning'
+                        })
+                    </script>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                {% with errors = get_flashed_messages(category_filter=["danger"]) %}
+                    {% if errors %}
+                    {% for error in errors %}
+                    <script>
+                        new Notify ({
+                        title: 'Error',
+                        text: `{{error|safe}}`,
+                        status: 'error',
+                        autoclose: true,
+                        autotimeout: 3000,
+                        })
+                    </script>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                    {% with messages = get_flashed_messages(category_filter=["success"]) %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    <script>
+                        new Notify ({
+                            title: 'Success',
+                            text: `{{message|safe}}`,
+                            status: 'success'
+                            })
+                        </script>                      
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+
+<script>
+
+    function delUser(userId){
+        Swal.fire({
+        title: 'Are you sure?',
+        icon: "warning",
+        text: "You won't be able to revert this!",
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: `<a href="/delete/users/${userId}" style="color: white;text-decoration: none;">Yeah!</a>`
+        })
+    }
+</script>
+            {% endblock %}

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Resend Link : {{ favTitle }}</title>
+    <meta name="title" content="CGV : Online Certificate Verification System">
+	<meta name="description" content="A Startup Company based in India, that offers Full-Stack Web Development, User Interface Design, etc at a very reasonable cost. Contact us at contact@vigneshshetty.in">
+
+
+          <!-- Favicons -->
+  <link href="{{ url_for('static', filename='images/favicon/favicon.ico') }}" rel="icon">
+  <link href="{{ url_for('static', filename='images/favicon/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+    <!-- Custom fonts for this template-->
+    <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+   <!-- Custom styles for this template-->
+   <link href="{{ url_for('static', filename='css/sb-admin-2.css') }}" rel="stylesheet">
+   <link href="{{ url_for('static', filename='css/simple-notify.min.css') }}" rel="stylesheet">
+ <script src="{{ url_for('static', filename='js/simple-notify.min.js') }}"></script>
+   <link rel="stylesheet" href="{{ url_for('static', filename='css/darkmode.css') }}">
+   <style>
+         .dark-mode , .dark-mode .row , .dark-mode .text-center a
+       {
+           background-color:black;
+   background-image: linear-gradient(
+180deg
+, black 10%, black 100%);
+   background-size: cover;
+   color:#fff;
+       }
+       .dark-mode .text-gray-900
+       {
+           background-color:black;
+           color:#fff !important;
+       }
+ 
+   </style>
+
+</head>
+
+<body class="bg-warning">
+
+    <input type="checkbox" id="toggle" name="checkbox" class="switch" onclick="myfun()">
+
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+            <div class="col-xl-10 col-lg-12 col-md-9">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row">
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-6">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Resend Activation Link</h1>
+                                    </div>
+
+                                    <form class="user" method="post" action="/resend-link/">
+                                        <div class="form-group">
+                                            <input type="email" name="email" class="form-control form-control-user"
+                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                                placeholder="Enter Email Address..." required>
+                                            <div class="emailFeedBackArea invalid-feedback" style="display:none"></div>
+                                            </div>
+                                        
+                                        <input id="resendBtn" class="btn btn-warning btn-user btn-block" value="Send" type="submit">
+                                        
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="small" style="color: #ff9800;" href="/forgot">Forgot Password?</a>
+                                    </div>
+                                    <div class="text-center">
+                                        <a class="small"style="color: #ff9800;" href="/register">Create an Account!</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{{ url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{{ url_for('static', filename='js/sb-admin-2.min.js') }}"></script>
+    <script src="{{url_for('static', filename='js/resend-link.js') }}"></script>
+        <!-- js for dark mode -->
+        <script src="{{ url_for('static', filename='js/darkmode.js') }}"></script>
+      {% with errors = get_flashed_messages(category_filter=["danger"]) %}
+                    {% if errors %}
+                    {% for error in errors %}
+                    <script>
+                        new Notify ({
+                        title: 'Error',
+                        text: `{{error|safe}}`,
+                        status: 'error'
+                        })
+                    </script>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                    {% with messages = get_flashed_messages(category_filter=["success"]) %}
+                    {% if messages %}
+                    {% for message in messages %}
+                    <script>
+                        new Notify ({
+                            title: 'Success',
+                            text: `{{message|safe}}`,
+                            status: 'success'
+                            })
+                        </script>                      
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+</body>
+
+</html>
